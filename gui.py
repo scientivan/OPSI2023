@@ -6,7 +6,7 @@ import numpy as np
 from tensorflow import keras
 import cv2
 
-model  = keras.models.load_model("D:/Programming/OPSI/ONLY LeNet5 tanpa apaapa/lenet5only.h5")
+model  = keras.models.load_model("C:/Users/pc/Documents/pythonProjects/OPSI2023/Le-Net dengan augmentasi dan hyperparameter/lenet5augmented.h5")
 
 root = Tk()
 root.title("Deteksi Kanker Paru berbasi CT-Scan / Dien Muhammad Scientivan Kurniapramono")
@@ -22,6 +22,7 @@ def showImage():
     images = np.reshape(input_arr,newshape=(1,100,100,3))
     images = np.array(images)
     prediction = model.predict(images)
+    result.configure(text=jenis_kanker[np.argmax(prediction[0])])
     print(jenis_kanker[np.argmax(prediction[0])])
     img.thumbnail((350,350))
     img = ImageTk.PhotoImage(img)
@@ -40,6 +41,9 @@ label.pack()
 
 button = Button(frame,text="Pilih Foto",command=showImage)
 button.pack(side=LEFT)
+
+result = Label(root)
+result.pack(side=TOP)
 
 root.mainloop()
 
